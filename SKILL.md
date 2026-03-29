@@ -42,6 +42,7 @@ Standardizovana procedura za kreiranje, isporuku i održavanje agent skills-a kr
    - Bira **GitHub** tab i unosi URL do skill direktorijuma.
    - Primer URL-a: `https://github.com/zalchemist/abacus-skills/tree/main/stock-analyzer/`
    - Klik na **Import from GitHub** — skill se automatski učitava.
+   - **Privatni repozitorijum?** Pogledaj `references/private-repo-access.md` — objašnjava kako dozvoliti samo Abacus AI pristup bez javnog postavljanja repozitorijuma.
 
 5. **Izmene i ažuriranje (agent menja → push → korisnik re-importuje)**
    - Korisnik prijavljuje problem ili traži izmenu.
@@ -54,6 +55,7 @@ Svi skills-i se čuvaju u jednom centralnom repozitorijumu:
 - **Repo:** [zalchemist/abacus-skills](https://github.com/zalchemist/abacus-skills)
 - **Struktura:** Svaki skill ima svoj poddirektorijum sa kompletnom strukturom (`SKILL.md`, `scripts/`, `references/`, `README.md`).
 - **Prednosti:** Jednostavno upravljanje, verzionisanje, i brz import u Abacus platformu.
+- **Privatni repozitorijum:** Ako je `abacus-skills` privatan, Abacus AI može pristupiti preko GitHub Deploy Key-a (samo za čitanje, vezan za jedan repozitorijum). Detaljna uputstva: `references/private-repo-access.md`.
 
 # Abacus Skill Creator
 
