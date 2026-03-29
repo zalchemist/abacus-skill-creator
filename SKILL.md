@@ -12,6 +12,13 @@ allowed-tools:
   - CodeExecution
 ---
 
+## Jezik komunikacije
+- Sva komunikacija sa korisnikom: srpski jezik, latinica, ekavski dijalekt
+- Isporuka svih rezultata i izveštaja: srpski jezik
+- Bez reči bosanskog/hrvatskog porekla
+- Interna dokumentacija i reference ostaju na engleskom
+
+
 # Abacus Skill Creator
 
 Autonomous skill factory that transforms raw material — workflow descriptions, existing code, API documentation, PDFs, transcripts — into complete, validated, production-ready agent skills.
