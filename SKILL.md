@@ -18,6 +18,42 @@ allowed-tools:
 - Bez reči bosanskog/hrvatskog porekla
 - Interna dokumentacija i reference ostaju na engleskom
 
+## Workflow: Kreiranje i održavanje Skills-a
+
+Standardizovana procedura za kreiranje, isporuku i održavanje agent skills-a kroz GitHub integraciju.
+
+### Koraci
+
+1. **Definisanje zahteva (korisnik)**
+   - Korisnik opisuje šta skill treba da radi — tekstom, kodom, linkom, dokumentom.
+   - Agent postavlja dodatna pitanja ako je potrebno.
+
+2. **Kreiranje strukture (agent, lokalno)**
+   - Agent pokreće 5-fazni pipeline (Discovery → Design → Architecture → Detection → Implementation).
+   - Rezultat: kompletna skill direktorijum struktura sa SKILL.md, skriptama, referencama i dokumentacijom.
+
+3. **Push na GitHub (agent → `zalchemist/abacus-skills/skill-name/`)**
+   - Agent push-uje gotov skill u centralni repozitorijum: **[zalchemist/abacus-skills](https://github.com/zalchemist/abacus-skills)**.
+   - Svaki skill se čuva u zasebnom poddirektorijumu (`skill-name/`).
+   - Primer putanje: `https://github.com/zalchemist/abacus-skills/tree/main/stock-analyzer/`
+
+4. **Import u Abacus (korisnik, GitHub URL)**
+   - Korisnik otvara Abacus AI → Agent Settings → Customize & Add Skills → **+ New Skill**.
+   - Bira **GitHub** tab i unosi URL do skill direktorijuma.
+   - Primer URL-a: `https://github.com/zalchemist/abacus-skills/tree/main/stock-analyzer/`
+   - Klik na **Import from GitHub** — skill se automatski učitava.
+
+5. **Izmene i ažuriranje (agent menja → push → korisnik re-importuje)**
+   - Korisnik prijavljuje problem ili traži izmenu.
+   - Agent menja fajlove lokalno, push-uje na GitHub.
+   - Korisnik ponovo importuje skill sa istog URL-a (ili briše stari i dodaje novi).
+
+### Napomena: Centralni repozitorijum
+
+Svi skills-i se čuvaju u jednom centralnom repozitorijumu:
+- **Repo:** [zalchemist/abacus-skills](https://github.com/zalchemist/abacus-skills)
+- **Struktura:** Svaki skill ima svoj poddirektorijum sa kompletnom strukturom (`SKILL.md`, `scripts/`, `references/`, `README.md`).
+- **Prednosti:** Jednostavno upravljanje, verzionisanje, i brz import u Abacus platformu.
 
 # Abacus Skill Creator
 
