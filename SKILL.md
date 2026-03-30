@@ -1,5 +1,5 @@
 ---
-name: abacus-skill-creator
+name: abacus-skill-creator-v1
 description: >-
   Creates production-ready AI agent skills from workflow descriptions, code,
   API docs, or any raw input. Activates when user asks to create a skill,
