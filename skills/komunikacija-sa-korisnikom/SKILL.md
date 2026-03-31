@@ -1,3 +1,27 @@
+---
+name: komunikacija-sa-korisnikom
+description: >-
+  Definiše komunikacioni stil za korisnika koji traži originalne podatke,
+  reprezentativne primere, potvrdu pre izvršenja i komunikaciju na srpskom
+  jeziku, latinicom i ekavicom.
+license: MIT
+activation: /komunikacija-sa-korisnikom
+metadata:
+  author: zalchemist
+  version: "1.0.0"
+  created: 2026-03-31
+  last_reviewed: 2026-03-31
+  review_interval_days: 90
+provenance:
+  maintainer: zalchemist
+  version: "1.0.0"
+  created: 2026-03-31
+  source_references:
+    - examples/dobar-pristup.md
+    - examples/los-pristup.md
+    - workflow/checkpoint-workflow.md
+---
+
 # Skill: Komunikacija sa korisnikom
 
 ## Opis

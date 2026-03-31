@@ -18,6 +18,8 @@ import json
 import os
 import re
 import sys
+import tokenize
+from io import StringIO
 from pathlib import Path
 
 
@@ -131,6 +133,49 @@ SKIP_DIRS: set[str] = {
 }
 
 
+def _is_self_scan_target(skill_dir: Path, file_path: Path) -> bool:
+    """Avoid flagging the scanner's own regex definitions as live findings."""
+    relative_parts = file_path.relative_to(skill_dir).parts
+    return relative_parts == ("scripts", "security_scan.py")
+
+
+def _should_skip_line(file_path: Path, line: str) -> bool:
+    """Skip obvious documentation placeholders and shell exports."""
+    stripped = line.strip()
+
+    if file_path.suffix.lower() == ".md":
+        if stripped.startswith(("```", "#")):
+            return True
+        if "your_key_here" in stripped or "<YOUR_" in stripped or "<USER_" in stripped:
+            return True
+
+    if file_path.suffix.lower() in {".sh", ".bash", ".zsh", ".md"} and stripped.startswith("export "):
+        return True
+
+    return False
+
+
+def _python_code_lines(content: str) -> set[int]:
+    """Return line numbers that contain Python code tokens, excluding strings/comments."""
+    code_lines: set[int] = set()
+    try:
+        for token in tokenize.generate_tokens(StringIO(content).readline):
+            if token.type in {
+                tokenize.STRING,
+                tokenize.COMMENT,
+                tokenize.INDENT,
+                tokenize.DEDENT,
+                tokenize.NEWLINE,
+                tokenize.NL,
+                tokenize.ENDMARKER,
+            }:
+                continue
+            code_lines.add(token.start[0])
+    except tokenize.TokenError:
+        return set(range(1, len(content.splitlines()) + 1))
+    return code_lines
+
+
 def _is_text_file(file_path: Path) -> bool:
     """
     Determine if a file is likely a text file that should be scanned.
@@ -199,13 +244,21 @@ def _scan_file_content(
         return issues
 
     try:
-        lines = file_path.read_text(encoding="utf-8", errors="replace").splitlines()
+        content = file_path.read_text(encoding="utf-8", errors="replace")
+        lines = content.splitlines()
     except (OSError, PermissionError):
         return issues
 
     is_python = file_path.suffix.lower() == ".py"
+    if _is_self_scan_target(skill_dir, file_path):
+        return issues
+
+    python_code_lines = _python_code_lines(content) if is_python else set()
 
     for line_num, line in enumerate(lines, start=1):
+        if _should_skip_line(file_path, line):
+            continue
+
         # Check API key patterns against all text files
         for pattern_name, regex, description, severity in API_KEY_PATTERNS:
             match = regex.search(line)
@@ -219,7 +272,7 @@ def _scan_file_content(
                 })
 
         # Check Python-specific patterns only in .py files
-        if is_python:
+        if is_python and line_num in python_code_lines:
             for pattern_name, regex, description, severity in PYTHON_DANGER_PATTERNS:
                 match = regex.search(line)
                 if match:

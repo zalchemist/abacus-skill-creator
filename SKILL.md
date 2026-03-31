@@ -1,9 +1,24 @@
 ---
-name: abacus-skill-creator-v1
+name: workspace
 description: >-
   Creates production-ready AI agent skills from workflow descriptions, code,
   API docs, or any raw input. Activates when user asks to create a skill,
   automate a workflow, build an agent, or turn a process into reusable software.
+license: MIT
+metadata:
+  author: zalchemist
+  version: 1.0.0
+  created: 2026-03-31
+  last_reviewed: 2026-03-31
+  review_interval_days: 90
+activation: /abacus-skill-creator-v1
+provenance:
+  maintainer: zalchemist
+  version: 1.0.0
+  created: 2026-03-31
+  source_references:
+    - README.md
+    - references/pipeline-phases.md
 allowed-tools:
   - WebSearch
   - FileRead

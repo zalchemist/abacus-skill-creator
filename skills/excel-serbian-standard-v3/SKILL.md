@@ -1,3 +1,26 @@
+---
+name: excel-serbian-standard-v3
+description: >-
+  Kreira, uređuje i validira Excel fajlove za srpsko i evropsko tržište,
+  uključujući formatiranje brojeva, formula, tabela i izveštaja.
+license: MIT
+activation: /excel-serbian-standard-v3
+metadata:
+  author: zalchemist
+  version: 3.0
+  created: 2026-03-01
+  last_reviewed: 2026-03-31
+  review_interval_days: 90
+provenance:
+  maintainer: zalchemist
+  version: 3.0
+  created: 2026-03-01
+  source_references:
+    - references/format-pravila.md
+    - references/excel-table-pravila.md
+    - references/tipovi-kolona.md
+---
+
 # Excel Serbian Standard v3 — Profesionalni Excel sa Srpskim/Evropskim Formatiranjem
 
 Ti si ekspert za kreiranje, editovanje i analizu Excel fajlova sa srpskim/evropskim standardom formatiranja. Tvoj zadatak je da generišeš profesionalne `.xlsx` fajlove koristeći `openpyxl` i `pandas`, sa tačkom kao separatorom hiljada i zarezom kao decimalnim separatorom. Svaki fajl koji isporučiš mora biti produkciono spreman — bez grešaka u formulama, sa ispravnim formatiranjem i kontrolnim mehanizmima.

@@ -4,19 +4,27 @@ Skripta za komunikaciju sa Knowledge Brain Chatbot-om.
 Koristi se iz DeepAgent sesija.
 """
 
-from abacusai import ApiClient
 import os
 
-DEPLOYMENT_TOKEN = 'aa12e1f29bf945c8a5fa0ae203873ff2'
-DEPLOYMENT_ID = '14e982c370'
+from abacusai import ApiClient
+
+
+def _require_env(name: str) -> str:
+    """Read a required environment variable or raise a clear error."""
+    value = os.environ.get(name)
+    if not value:
+        raise RuntimeError(f"Set {name} environment variable")
+    return value
 
 def get_context(user_prompt: str, api_key: str) -> str:
     """Dobij kontekst od Chatbot-a pre početka rada."""
     client = ApiClient(api_key=api_key)
-    
+    deployment_token = _require_env("KB_CHATBOT_DEPLOYMENT_TOKEN")
+    deployment_id = _require_env("KB_CHATBOT_DEPLOYMENT_ID")
+
     response = client.get_chat_response(
-        deployment_token=DEPLOYMENT_TOKEN,
-        deployment_id=DEPLOYMENT_ID,
+        deployment_token=deployment_token,
+        deployment_id=deployment_id,
         messages=[{
             'is_user': True,
             'text': f'''[DEEP_AGENT_QUERY]
@@ -30,13 +38,15 @@ Daj mi:
 5. Anti-patterns - šta NE raditi'''
         }]
     )
-    
+
     return response['messages'][-1]['text']
 
 def send_report(report: dict, api_key: str) -> str:
     """Pošalji izveštaj o sesiji Chatbot-u."""
     client = ApiClient(api_key=api_key)
-    
+    deployment_token = _require_env("KB_CHATBOT_DEPLOYMENT_TOKEN")
+    deployment_id = _require_env("KB_CHATBOT_DEPLOYMENT_ID")
+
     report_text = f'''[DEEP_AGENT_REPORT]
 ## Korisnikov zahtev
 {report.get('user_prompt', 'N/A')}
@@ -55,13 +65,13 @@ def send_report(report: dict, api_key: str) -> str:
 
 ## Preporuke za ubuduće
 {report.get('recommendations', 'N/A')}'''
-    
+
     response = client.get_chat_response(
-        deployment_token=DEPLOYMENT_TOKEN,
-        deployment_id=DEPLOYMENT_ID,
+        deployment_token=deployment_token,
+        deployment_id=deployment_id,
         messages=[{'is_user': True, 'text': report_text}]
     )
-    
+
     return response['messages'][-1]['text']
 
 if __name__ == '__main__':

@@ -1,3 +1,26 @@
+---
+name: deep-agent-chatbot-protocol
+description: >-
+  Definiše obaveznu proceduru komunikacije između DeepAgent-a i Knowledge Brain
+  Chatbot-a. Aktivira se kada agent treba da pribavi kontekst pre rada, pošalje
+  update tokom izvršavanja ili dostavi završni izveštaj nakon zadatka.
+license: MIT
+activation: /deep-agent-chatbot-protocol
+metadata:
+  author: Zalchemist
+  version: 1.0.0
+  created: 2026-03-31
+  last_reviewed: 2026-03-31
+  review_interval_days: 90
+provenance:
+  maintainer: Zalchemist
+  version: 1.0.0
+  created: 2026-03-31
+  source_references:
+    - references/api-reference.md
+    - references/message-formats.md
+---
+
 # Deep Agent - Chatbot Protocol
 
 Ovaj skill definiše OBAVEZNU proceduru komunikacije između DeepAgent-a i Knowledge Brain Chatbot-a.
