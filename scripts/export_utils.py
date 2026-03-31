@@ -6,11 +6,10 @@ Packages Claude Code skills for Desktop/Web/API use with versioning and validati
 """
 
 import os
+import subprocess
 import sys
 import zipfile
-import subprocess
 from datetime import datetime
-from typing import Dict, List, Tuple
 
 # Directories and files to exclude from exports
 EXCLUDE_DIRS = {
@@ -33,7 +32,7 @@ MAX_NAME_LENGTH = 64
 MAX_DESCRIPTION_LENGTH = 1024
 
 
-def get_skill_version(skill_path: str, override_version: str = None) -> str:
+def get_skill_version(skill_path: str, override_version: str | None = None) -> str:
     """
     Determine skill version from git tags, SKILL.md, or use default.
 
@@ -49,12 +48,12 @@ def get_skill_version(skill_path: str, override_version: str = None) -> str:
 
     # Try git tags first
     try:
-        os.chdir(skill_path)
         result = subprocess.run(
             ['git', 'describe', '--tags', '--abbrev=0'],
             capture_output=True,
             text=True,
-            timeout=5
+            timeout=5,
+            cwd=skill_path,
         )
         if result.returncode == 0:
             version = result.stdout.strip()
@@ -66,7 +65,7 @@ def get_skill_version(skill_path: str, override_version: str = None) -> str:
     skill_md_path = os.path.join(skill_path, 'SKILL.md')
     if os.path.exists(skill_md_path):
         try:
-            with open(skill_md_path, 'r', encoding='utf-8') as f:
+            with open(skill_md_path, encoding='utf-8') as f:
                 content = f.read()
                 # Look for version: in frontmatter
                 if content.startswith('---'):
@@ -84,7 +83,7 @@ def get_skill_version(skill_path: str, override_version: str = None) -> str:
     return 'v1.0.0'
 
 
-def validate_skill_structure(skill_path: str) -> Tuple[bool, List[str]]:
+def validate_skill_structure(skill_path: str) -> tuple[bool, list[str]]:
     """
     Validate that skill has required structure for export.
 
@@ -113,7 +112,7 @@ def validate_skill_structure(skill_path: str) -> Tuple[bool, List[str]]:
 
     # Validate SKILL.md frontmatter
     try:
-        with open(skill_md_path, 'r', encoding='utf-8') as f:
+        with open(skill_md_path, encoding='utf-8') as f:
             content = f.read()
 
             if not content.startswith('---'):
@@ -216,8 +215,8 @@ def create_export_package(
     output_dir: str,
     variant: str = 'desktop',
     version: str = 'v1.0.0',
-    skill_name: str = None
-) -> Dict:
+    skill_name: str | None = None,
+) -> dict:
     """
     Create optimized export package for specified variant.
 
@@ -309,9 +308,9 @@ def create_export_package(
 def generate_installation_guide(
     skill_name: str,
     version: str,
-    desktop_package: Dict = None,
-    api_package: Dict = None,
-    output_dir: str = None
+    desktop_package: dict | None = None,
+    api_package: dict | None = None,
+    output_dir: str | None = None,
 ) -> str:
     """
     Generate platform-specific installation guide.
@@ -626,11 +625,11 @@ After installation, verify:
 
 def export_skill(
     skill_path: str,
-    variants: List[str] = ['desktop', 'api'],
-    platform: str = None,
-    version_override: str = None,
-    output_dir: str = None
-) -> Dict:
+    variants: list[str] | None = None,
+    platform: str | None = None,
+    version_override: str | None = None,
+    output_dir: str | None = None,
+) -> dict:
     """
     Main export function - validates, packages, and generates guides.
 
@@ -644,6 +643,9 @@ def export_skill(
     Returns:
         Dict with export results
     """
+    if variants is None:
+        variants = ['desktop', 'api']
+
     # Normalize path
     skill_path = os.path.abspath(skill_path)
     skill_name = os.path.basename(skill_path)
@@ -817,7 +819,9 @@ Examples:
 
     # Run export
     print(f"\n🚀 Exporting skill: {os.path.basename(skill_path)}\n")
-    results = export_skill(skill_path, variants, version_override, output_dir)
+    results = export_skill(
+        skill_path, variants, version_override=version_override, output_dir=output_dir
+    )
 
     # Print summary
     print(f"\n{'='*60}")
