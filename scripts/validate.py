@@ -18,8 +18,6 @@ import json
 import re
 import sys
 from pathlib import Path
-from typing import Optional
-
 
 # --- Constants ---
 
@@ -40,7 +38,7 @@ LOCAL_LINK_PATTERN = re.compile(
 )
 
 
-def _parse_frontmatter(content: str) -> tuple[Optional[str], Optional[str]]:
+def _parse_frontmatter(content: str) -> tuple[str | None, str | None]:
     """
     Extract frontmatter and body from SKILL.md content.
 
@@ -64,7 +62,7 @@ def _parse_frontmatter(content: str) -> tuple[Optional[str], Optional[str]]:
     return frontmatter, body
 
 
-def _parse_yaml_field(frontmatter: str, field: str) -> Optional[str]:
+def _parse_yaml_field(frontmatter: str, field: str) -> str | None:
     """
     Extract a top-level scalar field value from YAML frontmatter using simple parsing.
 
@@ -150,7 +148,7 @@ def _subfield_exists(frontmatter: str, parent: str, child: str) -> bool:
     return False
 
 
-def _parse_subfield_value(frontmatter: str, parent: str, child: str) -> Optional[str]:
+def _parse_subfield_value(frontmatter: str, parent: str, child: str) -> str | None:
     """
     Extract a sub-field value from under a parent field in YAML frontmatter.
 

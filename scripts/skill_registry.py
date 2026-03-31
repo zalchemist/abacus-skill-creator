@@ -22,13 +22,11 @@ Exit codes:
 
 import argparse
 import json
-import os
 import re
 import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional
 
 # --- Import sibling scripts ---
 
@@ -36,10 +34,9 @@ _SCRIPTS_DIR = Path(__file__).resolve().parent
 if str(_SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS_DIR))
 
-from validate import validate_skill, _parse_frontmatter, _parse_yaml_field, _parse_subfield_value
 from security_scan import security_scan
 from staleness_check import DEFAULT_REVIEW_INTERVAL_DAYS
-
+from validate import _parse_frontmatter, _parse_subfield_value, _parse_yaml_field, validate_skill
 
 # --- Constants ---
 

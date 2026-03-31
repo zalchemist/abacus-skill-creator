@@ -21,7 +21,6 @@ import subprocess
 import sys
 from datetime import date, timedelta
 from pathlib import Path
-from typing import Optional
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
@@ -32,7 +31,6 @@ if str(_SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS_DIR))
 
 from validate import _parse_frontmatter, _parse_subfield_value  # noqa: E402
-
 
 # --- Constants ---
 
@@ -51,7 +49,7 @@ def _date_pattern():
     return DATE_PATTERN_RE
 
 
-def _parse_date(value: str) -> Optional[date]:
+def _parse_date(value: str) -> date | None:
     """
     Parse a YYYY-MM-DD string into a date object.
 
@@ -70,7 +68,7 @@ def _parse_date(value: str) -> Optional[date]:
         return None
 
 
-def _get_git_last_modified(skill_path: str) -> Optional[date]:
+def _get_git_last_modified(skill_path: str) -> date | None:
     """
     Get the last git commit date for a skill directory.
 
@@ -104,7 +102,7 @@ def _get_git_last_modified(skill_path: str) -> Optional[date]:
         return None
 
 
-def _check_review_staleness(frontmatter: str, git_last_modified: Optional[date]) -> list[dict]:
+def _check_review_staleness(frontmatter: str, git_last_modified: date | None) -> list[dict]:
     """
     Check whether a skill is overdue for review.
 
@@ -247,7 +245,7 @@ def _parse_yaml_list(frontmatter: str, parent: str, child: str) -> list[dict]:
     # Find the parent block
     in_parent = False
     in_child = False
-    current_item: Optional[dict] = None
+    current_item: dict | None = None
     child_indent = -1
 
     for line in lines:
@@ -419,7 +417,7 @@ def _parse_schema_expectations_deep(frontmatter: str) -> list[dict]:
     """
     lines = frontmatter.split("\n")
     expectations: list[dict] = []
-    current: Optional[dict] = None
+    current: dict | None = None
     in_metadata = False
     in_schema = False
     in_expected_keys = False

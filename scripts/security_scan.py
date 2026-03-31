@@ -20,7 +20,6 @@ import re
 import sys
 from pathlib import Path
 
-
 # --- API Key Patterns ---
 # Each entry: (pattern_name, compiled_regex, description, severity)
 
