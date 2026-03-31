@@ -39,10 +39,10 @@ data/
 *.db
 agentdb.db
 
-# Test files
-test_*.py
-!test_agentdb_learning.py
-tests/
+# Test caches
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Generated format adapter files
 *.mdc
