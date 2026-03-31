@@ -1,5 +1,5 @@
 #!/bin/sh
-# install.sh — Symlink agent-skill-creator to all detected global platforms
+# install.sh — Symlink abacus-skill-creator to all detected global platforms
 #
 # For users who already cloned the repo. Creates symlinks so `git pull` in the
 # cloned directory updates all tools automatically.
@@ -16,7 +16,8 @@ set -eu
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
-SKILL_NAME="agent-skill-creator"
+SKILL_NAME="abacus-skill-creator"
+SKILL_COMMAND="abacus-skill-creator-v1"
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # ---------------------------------------------------------------------------
@@ -112,7 +113,7 @@ create_symlink() {
 # Uninstall: remove all symlinks pointing to REPO_DIR
 # ---------------------------------------------------------------------------
 do_uninstall() {
-    printf "\n${BOLD}Uninstalling agent-skill-creator symlinks${NC}\n\n"
+    printf "\n${BOLD}Uninstalling abacus-skill-creator symlinks${NC}\n\n"
 
     canonical="$HOME/.agents/skills/$SKILL_NAME"
     removed=0
@@ -158,7 +159,7 @@ do_uninstall() {
 # Install: create symlinks to all detected platforms
 # ---------------------------------------------------------------------------
 do_install() {
-    printf "\n${BOLD}Agent Skill Creator — Symlink Installer${NC}\n\n"
+    printf "\n${BOLD}Abacus Skill Creator — Symlink Installer${NC}\n\n"
     info "Source: $REPO_DIR"
 
     count=0
@@ -201,7 +202,7 @@ do_install() {
 
     printf "${BOLD}How to use:${NC}\n"
     printf "  Open your AI agent and type:\n"
-    printf "    /agent-skill-creator <describe your workflow>\n\n"
+    printf "    /%s <describe your workflow>\n\n" "$SKILL_COMMAND"
 }
 
 # ---------------------------------------------------------------------------

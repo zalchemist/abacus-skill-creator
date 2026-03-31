@@ -1,4 +1,4 @@
-# Agent Skill Creator
+# Abacus Skill Creator
 
 **Turn any workflow into reusable AI agent software that installs on 14+ tools — no spec writing, no prompt engineering, no coding required.**
 
@@ -6,7 +6,7 @@
 [![Version](https://img.shields.io/badge/version-5.0.0-brightgreen)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)]()
 
-![Agent Skill Creator Overview](Dynamous/agentskillimage.png)
+<!-- Repository image intentionally omitted until a checked-in asset is available. -->
 
 ---
 
@@ -18,7 +18,7 @@ Every AI coding tool — Claude Code, GitHub Copilot, Cursor, Windsurf, Codex, G
 
 **The catch:** building a proper skill requires understanding the spec format, writing clear prompt instructions, designing how information loads progressively, writing functional code, and getting activation keywords right. Even simple skills take [multiple rounds of iteration](https://www.youtube.com/watch?v=izJkgLqlbN8) to get right.
 
-**Agent Skill Creator removes that barrier entirely.** You pass in whatever you have — messy docs, links, code, PDFs, transcripts, vague descriptions — and it produces a validated, security-scanned skill ready to install on 14+ tools and share with your team. You describe what you do; it builds the software.
+**Abacus Skill Creator removes that barrier entirely.** You pass in whatever you have — messy docs, links, code, PDFs, transcripts, vague descriptions — and it produces a validated, security-scanned skill ready to install on 14+ tools and share with your team. You describe what you do; it builds the software.
 
 ---
 
@@ -29,28 +29,28 @@ Every AI coding tool — Claude Code, GitHub Copilot, Cursor, Windsurf, Codex, G
 **Option A — One-liner (installs to all detected tools):**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/FrancyJGLisboa/agent-skill-creator/main/scripts/bootstrap.sh | sh
+curl -fsSL https://raw.githubusercontent.com/zalchemist/abacus-skill-creator/main/scripts/bootstrap.sh | sh
 ```
 
-This clones to `~/.agents/skills/agent-skill-creator` and symlinks to every detected global platform (Claude Code, Gemini CLI, Goose, OpenCode, Copilot). Run `git pull` once to update everywhere.
+This clones to `~/.agents/skills/abacus-skill-creator` and symlinks to every detected global platform (Claude Code, Gemini CLI, Goose, OpenCode, Copilot). Run `git pull` once to update everywhere.
 
 **Option B — Git clone (pick your tool):**
 
 ```bash
 # Claude Code / VS Code Copilot (global — works in all projects)
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git ~/.claude/skills/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git ~/.claude/skills/abacus-skill-creator
 
 # Cursor (per-project)
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git .cursor/rules/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git .cursor/rules/abacus-skill-creator
 
 # Codex CLI / Gemini CLI / Kiro / Antigravity (universal path)
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git ~/.agents/skills/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git ~/.agents/skills/abacus-skill-creator
 ```
 
 **Option C — Already cloned? Symlink to all tools:**
 
 ```bash
-cd agent-skill-creator
+cd abacus-skill-creator
 ./install.sh              # Symlink to all detected platforms
 ./install.sh --dry-run    # Preview without changes
 ./install.sh --uninstall  # Remove all symlinks
@@ -62,21 +62,21 @@ All 14 platforms: [see full list below](#all-platforms).
 
 ### 2. Use it
 
-Open your agent and type `/agent-skill-creator` followed by whatever you have:
+Open your agent and type `/abacus-skill-creator-v1` followed by whatever you have:
 
 ```
-/agent-skill-creator Every week I pull sales data from our CRM, clean
+/abacus-skill-creator-v1 Every week I pull sales data from our CRM, clean
 duplicate entries, calculate regional totals, and generate a PDF report.
 ```
 
 You can pass anything — plain English, documentation links, existing code, API docs, PDFs, database schemas, transcripts. Combine multiple sources in one message. The more context, the better the result.
 
 ```
-/agent-skill-creator Based on our deployment runbook: https://wiki.internal/deploy-process
+/abacus-skill-creator-v1 Based on our deployment runbook: https://wiki.internal/deploy-process
 ```
 
 ```
-/agent-skill-creator See scripts/invoice_processor.py — turn it into a reusable skill
+/abacus-skill-creator-v1 See scripts/invoice_processor.py — turn it into a reusable skill
 ```
 
 ### 3. What comes out
@@ -189,7 +189,7 @@ python3 scripts/skill_registry.py install sales-report-skill
 
 The registry is a git repo on GitHub or GitLab. Clone it once, and every team member can publish and install. No servers, no databases — just git.
 
-**For AI consultants:** The engagement model is teach, not build. Install agent-skill-creator on each team member's machine, create the shared `{team}-skills-registry` repo, teach the team the 5-step workflow (install, clone registry, create skill, publish, install from registry), and hand over a self-sustaining system. After you leave, the team keeps creating and sharing skills on their own. They know their workflows better than you do — your job is to remove the friction.
+**For AI consultants:** The engagement model is teach, not build. Install abacus-skill-creator on each team member's machine, create the shared `{team}-skills-registry` repo, teach the team the 5-step workflow (install, clone registry, create skill, publish, install from registry), and hand over a self-sustaining system. After you leave, the team keeps creating and sharing skills on their own. They know their workflows better than you do — your job is to remove the friction.
 
 ---
 
@@ -212,7 +212,7 @@ Skills are authored as **SKILL.md** (the open standard). Tools in **Tier 1** rea
 The emerging cross-tool convention. One install, multiple tools discover it automatically:
 
 ```bash
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git ~/.agents/skills/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git ~/.agents/skills/abacus-skill-creator
 ```
 
 Tools that read this path today: **Codex CLI, Gemini CLI, Kiro, Antigravity** — and growing.
@@ -221,16 +221,16 @@ Tools that read this path today: **Codex CLI, Gemini CLI, Kiro, Antigravity** �
 
 ```bash
 # Claude Code + VS Code Copilot (shared path — one install works for both)
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git ~/.claude/skills/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git ~/.claude/skills/abacus-skill-creator
 
 # Gemini CLI
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git ~/.gemini/skills/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git ~/.gemini/skills/abacus-skill-creator
 
 # Goose
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git ~/.config/goose/skills/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git ~/.config/goose/skills/abacus-skill-creator
 
 # OpenCode
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git ~/.config/opencode/skills/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git ~/.config/opencode/skills/abacus-skill-creator
 ```
 
 VS Code Copilot (1.108+) adopted the [Agent Skills Open Standard](https://code.visualstudio.com/docs/copilot/customization/agent-skills) and searches `~/.claude/skills/` by default. One install makes a skill globally available on both Claude Code and VS Code Copilot.
@@ -239,25 +239,25 @@ VS Code Copilot (1.108+) adopted the [Agent Skills Open Standard](https://code.v
 
 ```bash
 # Copilot (per-project alternative)
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git .github/skills/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git .github/skills/abacus-skill-creator
 
 # Cursor (auto-generates .mdc)
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git .cursor/rules/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git .cursor/rules/abacus-skill-creator
 
 # Windsurf (auto-generates .md rule)
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git .windsurf/rules/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git .windsurf/rules/abacus-skill-creator
 
 # Cline
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git .clinerules/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git .clinerules/abacus-skill-creator
 
 # Kiro
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git .kiro/skills/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git .kiro/skills/abacus-skill-creator
 
 # Trae
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git .trae/rules/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git .trae/rules/abacus-skill-creator
 
 # Roo Code
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git .roo/rules/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git .roo/rules/abacus-skill-creator
 ```
 
 ### Cursor — global workaround
@@ -266,23 +266,23 @@ Cursor has no global skills directory. Clone once and symlink per project:
 
 ```bash
 # 1. Clone once
-git clone https://github.com/FrancyJGLisboa/agent-skill-creator.git ~/agent-skills/agent-skill-creator
+git clone https://github.com/zalchemist/abacus-skill-creator.git ~/agent-skills/abacus-skill-creator
 
 # 2. In any project, symlink
-mkdir -p .cursor/rules && ln -s ~/agent-skills/agent-skill-creator .cursor/rules/agent-skill-creator
+mkdir -p .cursor/rules && ln -s ~/agent-skills/abacus-skill-creator .cursor/rules/abacus-skill-creator
 ```
 
 Add a shell alias to automate this (`~/.zshrc` or `~/.bashrc`):
 
 ```bash
-alias install-skills='mkdir -p .cursor/rules && ln -s ~/agent-skills/agent-skill-creator .cursor/rules/agent-skill-creator'
+alias install-skills='mkdir -p .cursor/rules && ln -s ~/agent-skills/abacus-skill-creator .cursor/rules/abacus-skill-creator'
 ```
 
 Then in any project: `install-skills`. Updates propagate automatically via the symlink.
 
 ### Using install.sh (for generated skills)
 
-Every skill generated by agent-skill-creator includes a cross-platform installer:
+Every skill generated by abacus-skill-creator includes a cross-platform installer:
 
 ```bash
 ./install.sh                          # Auto-detect platform
@@ -297,14 +297,14 @@ The installer is POSIX-compatible (works in bash, dash, zsh, ash), handles all 1
 ### Claude Desktop / claude.ai
 
 ```bash
-python3 scripts/export_utils.py ./agent-skill-creator/ --variant desktop
+python3 scripts/export_utils.py ./abacus-skill-creator/ --variant desktop
 # Then: Settings > Skills > Upload the generated .zip
 ```
 
 ### Update
 
 ```bash
-cd ~/.agents/skills/agent-skill-creator && git pull
+cd ~/.agents/skills/abacus-skill-creator && git pull
 ```
 
 If you used the one-liner (Option A) or `./install.sh` (Option C), all symlinks update automatically — just `git pull` once from the canonical location. The skill also performs a silent git-based version check when loaded and will mention if a newer version is available.
@@ -464,8 +464,8 @@ All commands use exit code `0` for success, `1` for errors. All support `--json`
 
 ## Project Structure
 
-```
-agent-skill-creator/
+``` 
+abacus-skill-creator/
   SKILL.md                      # The skill definition (what the agent reads)
   README.md                     # This file
   install.sh                    # Symlink self-installer (for cloned repos)
@@ -495,10 +495,8 @@ agent-skill-creator/
     phase5-implementation.md    # Phase 5 deep dive
     templates/                  # Skill templates
     examples/stock-analyzer/    # Example skill
-  registry/                     # Shared skill catalog
-    registry.json
-    skills/
-  exports/                      # Export output
+  skills/                       # Installable skills maintained in this repo
+  examples/                     # Reference examples and fixtures
 ```
 
 ---

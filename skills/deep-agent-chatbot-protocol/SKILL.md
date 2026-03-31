@@ -21,8 +21,8 @@ from abacusai import ApiClient
 
 client = ApiClient(api_key="<USER_API_KEY>")
 response = client.get_chat_response(
-    deployment_token='aa12e1f29bf945c8a5fa0ae203873ff2',
-    deployment_id='14e982c370',
+    deployment_token='<YOUR_CHATBOT_DEPLOYMENT_TOKEN>',
+    deployment_id='<YOUR_CHATBOT_DEPLOYMENT_ID>',
     messages=[{
         'is_user': True,
         'text': f'''[DEEP_AGENT_QUERY]
@@ -45,8 +45,8 @@ Ako naiđeš na značajnu grešku ili naučiš nešto novo, možeš (opciono) po
 
 ```python
 client.get_chat_response(
-    deployment_token='aa12e1f29bf945c8a5fa0ae203873ff2',
-    deployment_id='14e982c370',
+    deployment_token='<YOUR_CHATBOT_DEPLOYMENT_TOKEN>',
+    deployment_id='<YOUR_CHATBOT_DEPLOYMENT_ID>',
     messages=[{
         'is_user': True,
         'text': f'''[DEEP_AGENT_UPDATE]
@@ -62,8 +62,8 @@ Kada završiš zadatak, MORAŠ da pošalješ izveštaj:
 
 ```python
 client.get_chat_response(
-    deployment_token='aa12e1f29bf945c8a5fa0ae203873ff2',
-    deployment_id='14e982c370',
+    deployment_token='<YOUR_CHATBOT_DEPLOYMENT_TOKEN>',
+    deployment_id='<YOUR_CHATBOT_DEPLOYMENT_ID>',
     messages=[{
         'is_user': True,
         'text': f'''[DEEP_AGENT_REPORT]

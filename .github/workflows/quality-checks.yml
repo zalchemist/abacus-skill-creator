@@ -1,0 +1,40 @@
+name: Quality checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - cursor/**
+
+jobs:
+  validate-and-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        skill_path:
+          - .
+          - skills/biznisoft-db-analyst-v1
+          - skills/excel-serbian-standard-v3
+          - skills/komunikacija-sa-korisnikom
+          - skills/deep-agent-chatbot-protocol
+          - examples/stock-analyzer
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Prepare example skill fixture
+        if: matrix.skill_path == 'examples/stock-analyzer'
+        run: cp examples/stock-analyzer/SKILL-EXAMPLE.md examples/stock-analyzer/SKILL.md
+
+      - name: Run spec validator
+        run: python3 scripts/validate.py "${{ matrix.skill_path }}"
+
+      - name: Run security scan
+        run: python3 scripts/security_scan.py "${{ matrix.skill_path }}"

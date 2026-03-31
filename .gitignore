@@ -41,8 +41,11 @@ agentdb.db
 
 # Test files
 test_*.py
+!test_*.py
 !test_agentdb_learning.py
 tests/
+!tests/
+!tests/**
 
 # Generated format adapter files
 *.mdc

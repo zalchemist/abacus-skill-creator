@@ -1,10 +1,10 @@
 #!/bin/sh
-# bootstrap.sh — One-liner bootstrap for agent-skill-creator
+# bootstrap.sh — One-liner bootstrap for abacus-skill-creator
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/FrancyJGLisboa/agent-skill-creator/main/scripts/bootstrap.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/zalchemist/abacus-skill-creator/main/scripts/bootstrap.sh | sh
 #
-# Clones agent-skill-creator to ~/.agents/skills/ and symlinks to all detected
+# Clones abacus-skill-creator to ~/.agents/skills/ and symlinks to all detected
 # global platforms. POSIX-compatible (works in bash, dash, zsh, ash).
 
 set -eu
@@ -12,8 +12,9 @@ set -eu
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
-REPO_URL="https://github.com/FrancyJGLisboa/agent-skill-creator.git"
-SKILL_NAME="agent-skill-creator"
+REPO_URL="https://github.com/zalchemist/abacus-skill-creator.git"
+SKILL_NAME="abacus-skill-creator"
+SKILL_COMMAND="abacus-skill-creator-v1"
 CANONICAL_DIR="$HOME/.agents/skills/$SKILL_NAME"
 
 # ---------------------------------------------------------------------------
@@ -118,7 +119,7 @@ create_symlink() {
 # Main
 # ---------------------------------------------------------------------------
 main() {
-    printf "\n${BOLD}Agent Skill Creator — Bootstrap Installer${NC}\n\n"
+    printf "\n${BOLD}Abacus Skill Creator — Bootstrap Installer${NC}\n\n"
 
     # Check for git
     if ! command -v git >/dev/null 2>&1; then
@@ -167,7 +168,7 @@ main() {
 
     printf "\n${BOLD}How to use:${NC}\n"
     printf "  Open your AI agent and type:\n"
-    printf "    /agent-skill-creator <describe your workflow>\n\n"
+    printf "    /%s <describe your workflow>\n\n" "$SKILL_COMMAND"
     printf "  To update later:\n"
     printf "    cd %s && git pull\n\n" "$CANONICAL_DIR"
 
