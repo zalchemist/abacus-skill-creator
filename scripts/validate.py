@@ -40,6 +40,15 @@ LOCAL_LINK_PATTERN = re.compile(
 )
 
 
+def _is_top_level_line(line: str) -> bool:
+    """
+    Return True when a line represents top-level YAML content.
+
+    YAML top-level keys start at column 0. Empty lines are not considered keys.
+    """
+    return bool(line) and line[0] not in (" ", "\t")
+
+
 def _parse_frontmatter(content: str) -> tuple[Optional[str], Optional[str]]:
     """
     Extract frontmatter and body from SKILL.md content.
@@ -51,16 +60,21 @@ def _parse_frontmatter(content: str) -> tuple[Optional[str], Optional[str]]:
         Tuple of (frontmatter_text, body_text). Either may be None if
         frontmatter is missing or malformed.
     """
-    if not content.startswith("---"):
+    lines = content.splitlines()
+    if not lines or lines[0].strip() != "---":
         return None, None
 
-    # Find the closing --- (skip the opening one at position 0)
-    closing_index = content.find("---", 3)
-    if closing_index == -1:
+    closing_line_index: Optional[int] = None
+    for i in range(1, len(lines)):
+        if lines[i].strip() == "---":
+            closing_line_index = i
+            break
+
+    if closing_line_index is None:
         return None, None
 
-    frontmatter = content[3:closing_index].strip()
-    body = content[closing_index + 3:].strip()
+    frontmatter = "\n".join(lines[1:closing_line_index]).strip()
+    body = "\n".join(lines[closing_line_index + 1:]).strip()
     return frontmatter, body
 
 
@@ -80,24 +94,27 @@ def _parse_yaml_field(frontmatter: str, field: str) -> Optional[str]:
     """
     lines = frontmatter.split("\n")
     for i, line in enumerate(lines):
-        stripped = line.strip()
-        if stripped.startswith(f"{field}:"):
-            value = stripped[len(field) + 1:].strip()
+        if not _is_top_level_line(line):
+            continue
+        key, sep, raw_value = line.partition(":")
+        if sep == "" or key.strip() != field:
+            continue
+        value = raw_value.strip()
 
-            # Check for YAML block scalar indicators (>- , |-, >, |)
-            if value in (">-", "|-", ">", "|", ">+", "|+"):
-                # Collect indented continuation lines
-                parts: list[str] = []
-                for j in range(i + 1, len(lines)):
-                    continuation = lines[j]
-                    # Continuation lines must be indented
-                    if continuation and (continuation[0] == " " or continuation[0] == "\t"):
-                        parts.append(continuation.strip())
-                    else:
-                        break
-                return " ".join(parts) if parts else ""
+        # Check for YAML block scalar indicators (>- , |-, >, |)
+        if value in (">-", "|-", ">", "|", ">+", "|+"):
+            # Collect indented continuation lines
+            parts: list[str] = []
+            for j in range(i + 1, len(lines)):
+                continuation = lines[j]
+                # Continuation lines must be indented
+                if continuation and (continuation[0] == " " or continuation[0] == "\t"):
+                    parts.append(continuation.strip())
+                else:
+                    break
+            return " ".join(parts) if parts else ""
 
-            return value
+        return value
     return None
 
 
@@ -113,8 +130,10 @@ def _field_exists_in_frontmatter(frontmatter: str, field: str) -> bool:
         True if the field is present.
     """
     for line in frontmatter.split("\n"):
-        stripped = line.strip()
-        if stripped.startswith(f"{field}:"):
+        if not _is_top_level_line(line):
+            continue
+        key, sep, _ = line.partition(":")
+        if sep and key.strip() == field:
             return True
     return False
 
@@ -136,7 +155,7 @@ def _subfield_exists(frontmatter: str, parent: str, child: str) -> bool:
     for line in lines:
         stripped = line.strip()
         # Detect the parent field
-        if stripped.startswith(f"{parent}:"):
+        if _is_top_level_line(line) and stripped.startswith(f"{parent}:"):
             in_parent = True
             continue
         if in_parent:
@@ -166,7 +185,7 @@ def _parse_subfield_value(frontmatter: str, parent: str, child: str) -> Optional
     in_parent = False
     for line in lines:
         stripped = line.strip()
-        if stripped.startswith(f"{parent}:"):
+        if _is_top_level_line(line) and stripped.startswith(f"{parent}:"):
             in_parent = True
             continue
         if in_parent:
