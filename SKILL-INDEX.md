@@ -3,6 +3,7 @@
 | Skill | Opis | Verzija | Datum |
 |-------|------|---------|-------|
 | biznisoft-db-analyst-v1 | Analiza Business Soft baza podataka | 1.0 | 2026-03 |
+| deep-agent-chatbot-protocol | Protokol komunikacije DeepAgent-a i Chatbot-a | 1.0 | 2026-03 |
 | excel-serbian-standard-v3 | Formatiranje Excel fajlova za srpsko tržište | 3.0 | 2026-03 |
 | komunikacija-sa-korisnikom | Pravila komunikacije i workflow | 1.0 | 2026-03-31 |
 

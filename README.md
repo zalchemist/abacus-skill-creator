@@ -6,8 +6,6 @@
 [![Version](https://img.shields.io/badge/version-5.0.0-brightgreen)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)]()
 
-![Agent Skill Creator Overview](Dynamous/agentskillimage.png)
-
 ---
 
 ## The Problem
@@ -467,7 +465,9 @@ All commands use exit code `0` for success, `1` for errors. All support `--json`
 ```
 agent-skill-creator/
   SKILL.md                      # The skill definition (what the agent reads)
+  SKILL-INDEX.md                # Index of bundled skills
   README.md                     # This file
+  pyproject.toml                # Project metadata, linting, and test config
   install.sh                    # Symlink self-installer (for cloned repos)
   scripts/
     bootstrap.sh                # Curl one-liner bootstrap (installs everywhere)
@@ -493,13 +493,17 @@ agent-skill-creator/
     phase3-architecture.md      # Phase 3 deep dive
     phase4-detection.md         # Phase 4 deep dive
     phase5-implementation.md    # Phase 5 deep dive
-    templates/                  # Skill templates
-    examples/stock-analyzer/    # Example skill
-  registry/                     # Shared skill catalog
-    registry.json
-    skills/
-  exports/                      # Export output
+  skills/                       # Bundled domain-specific skills
+    biznisoft-db-analyst-v1/    # BizniSoft database analyst
+    excel-serbian-standard-v3/  # Serbian market Excel formatting
+    komunikacija-sa-korisnikom/ # User communication rules
+    deep-agent-chatbot-protocol/# Deep agent chatbot protocol
+  examples/
+    stock-analyzer/             # Example skill (reference implementation)
+  tests/                        # Automated tests for core scripts
 ```
+
+The `registry/` and `exports/` directories are created at runtime when using the registry and export commands respectively.
 
 ---
 
@@ -508,7 +512,12 @@ agent-skill-creator/
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Run `python3 scripts/validate.py ./` and `python3 scripts/security_scan.py ./`
+4. Run quality checks:
+   ```bash
+   python3 scripts/validate.py ./
+   python3 scripts/security_scan.py ./
+   python3 -m pytest tests/         # run tests
+   ```
 5. Submit a pull request
 
 ---
